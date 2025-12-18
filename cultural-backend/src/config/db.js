@@ -3,10 +3,7 @@ import mongoose from "mongoose";
 export const connectDB = async () => {
   try {
     mongoose.set("strictQuery", true);
-    const conn = await mongoose.connect(
-      process.env.MONGO_URI ||
-        "mongodb+srv://root:Gane%402005@cluster0.boioow4.mongodb.net/cultural_db"
-    );
+    const conn = await mongoose.connect(process.env.MONGO_URI);
 
     console.log(`mongoDB connected : ${conn.connection.host}`);
   } catch (err) {
