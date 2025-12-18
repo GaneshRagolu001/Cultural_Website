@@ -1,10 +1,4 @@
-I **checked your GitHub repo structure** (it has two main folders: `cultural-frontend` and `cultural-backend`) and there isn’t a project README in the repo itself — just the short description on GitHub.([GitHub][1])
-
-Below is a **complete README.md** you can copy-paste into your project root. It’s a professional, clear, and descriptive file based on what your repository _is_ and what it _likely contains_:
-
----
-
-```markdown
+ 
 # Cultural Website
 
 An interactive cultural website designed to document and present heritage, traditions, festivals, and historical narratives, promoting awareness and appreciation of cultural diversity.:contentReference[oaicite:1]{index=1}
