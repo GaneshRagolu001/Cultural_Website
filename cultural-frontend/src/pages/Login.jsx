@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthUser } from "../context/AuthContext.jsx";
 import ImageSlideshow from "../components/ImageSlideshow";
 
@@ -82,9 +82,9 @@ const Login = () => {
 
           <p className="text-gray-500 text-sm mt-5 text-center">
             Don't have an account?{" "}
-            <a href="/register" className="text-gray-300 hover:underline">
+            <Link to="/register" className="text-gray-300 hover:underline">
               Register
-            </a>
+            </Link>
           </p>
         </div>
       </div>

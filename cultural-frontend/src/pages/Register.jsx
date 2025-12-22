@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axiosClient from "../api/axiosClient";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ImageSlideshow from "../components/ImageSlideshow";
 
 const Register = () => {
@@ -88,9 +88,9 @@ const Register = () => {
 
           <p className="text-gray-500 text-sm mt-5 text-center">
             Already have an account?{" "}
-            <a href="/login" className="text-gray-300 hover:underline">
+            <Link to="/login" className="text-gray-300 hover:underline">
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </div>
