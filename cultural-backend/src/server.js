@@ -15,13 +15,13 @@ import { errorHandler } from "./middleware/errorHandler.js";
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-  
+
 connectDB();
 
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: "https://cultural-website-nine.vercel.app",
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })

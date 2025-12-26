@@ -1,11 +1,11 @@
 import axios from "axios";
 
+// Check if the app is running in development mode
+
 const axiosClient = axios.create({
-  baseURL: "http://localhost:5000/api",
+  // Use localhost for dev, and the Render URL for production
+  baseURL: "https://cultural-backend.onrender.com/api",
   withCredentials: true,
 });
 
 export default axiosClient;
-
-
-// https://cultural-backend.onrender.com/api
