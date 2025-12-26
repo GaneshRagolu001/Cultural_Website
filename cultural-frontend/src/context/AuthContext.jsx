@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     axiosClient
-      .get("/auth/profile",)
+      .get("/auth/profile")
       .then((res) => {
         setuser(res.data);
         localStorage.setItem("user", JSON.stringify(res.data));
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const res = await axiosClient.post("/auth/login", { email, password });
-
+    localStorage.setItem("token", res.data.token);
     localStorage.setItem("user", JSON.stringify(res.data.user));
     setuser(res.data.user);
   };
