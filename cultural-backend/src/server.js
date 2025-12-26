@@ -21,11 +21,13 @@ connectDB();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://cultural-website-nine.vercel.app",
+    origin: ["https://cultural-website-nine.vercel.app"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(cookieParser());
 
 app.use("/api/auth", authrouter);
