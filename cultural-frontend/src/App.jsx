@@ -19,6 +19,7 @@ import AdminHeritage from "./pages/AdminHeritage";
 import AdminHeritageForm from "./pages/AdminHeritageForm";
 import AdminTimeline from "./pages/AdminTimeline";
 import AdminTimelineForm from "./pages/AdminTImelineForm";
+import StoryDetail from "./pages/StoryDetail";
 function App() {
   return (
     <BrowserRouter>
@@ -33,6 +34,7 @@ function App() {
 
           <Route path="/stories" element={<StoryList />} />
           <Route path="/map" element={<MapPage />} />
+          <Route path="/stories/:id" element={<StoryDetail />} />
           <Route
             path="/stories/submit"
             element={

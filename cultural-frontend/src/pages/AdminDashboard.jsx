@@ -1,41 +1,56 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FileText, Map, Clock, ShieldCheck, ChevronRight } from "lucide-react";
 
 const AdminDashboard = () => {
+  const cards = [
+    {
+      title: "Pending Stories",
+      desc: "Review and moderate user-submitted cultural accounts.",
+      path: "/admin/pending-stories",
+      icon: <FileText className="text-amber-600" />,
+      color: "bg-amber-50"
+    },
+    {
+      title: "Heritage Management",
+      desc: "Maintain the core archive of monuments and traditions.",
+      path: "/admin/heritage",
+      icon: <Map className="text-stone-600" />,
+      color: "bg-stone-50"
+    },
+    {
+      title: "Timeline Events",
+      desc: "Curate the chronological journey of Indian history.",
+      path: "/admin/timeline",
+      icon: <Clock className="text-blue-600" />,
+      color: "bg-blue-50"
+    }
+  ];
+
   return (
-    <div className="max-w-4xl mx-auto p-6 mt-20">
-      <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
+    <div className="min-h-screen bg-[#FDFCFB] pt-24 pb-12 px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex items-center gap-3 mb-10">
+          <ShieldCheck className="text-amber-800" size={32} />
+          <h1 className="text-4xl font-serif font-bold text-stone-900">Admin Command</h1>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Link
-          to="/admin/pending-stories"
-          className="p-4 bg-white rounded shadow hover:shadow-lg transition block"
-        >
-          <h2 className="font-semibold mb-1">Pending Stories</h2>
-          <p className="text-sm text-gray-600">
-            Review user-submitted cultural stories and approve or reject them.
-          </p>
-        </Link>
-
-        {/* Future: add cards for heritage, timeline mgmt, etc. */}
-        <Link
-          to="/admin/heritage"
-          className="p-4 bg-white rounded shadow hover:shadow-lg transition block"
-        >
-          <h2 className="font-semibold mb-1">Heritage Management</h2>
-          <p className="text-sm text-gray-600">
-            Create, update or remove heritage entries.
-          </p>
-        </Link>
-
-        <Link
-          to="/admin/timeline"
-          className="p-4 bg-white rounded shadow hover:shadow-lg transition block"
-        >
-          <h2 className="font-semibold mb-1">Timeline Management</h2>
-          <p className="text-sm text-gray-600">
-            Update historical and cultural timeline events.
-          </p>
-        </Link>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {cards.map((card, i) => (
+            <motion.div key={i} whileHover={{ y: -5 }}>
+              <Link to={card.path} className="group block h-full bg-white p-8 rounded-[2rem] border border-stone-100 shadow-sm hover:shadow-xl transition-all">
+                <div className={`${card.color} w-14 h-14 rounded-2xl flex items-center justify-center mb-6`}>
+                  {card.icon}
+                </div>
+                <h2 className="text-xl font-bold text-stone-800 mb-2">{card.title}</h2>
+                <p className="text-stone-500 text-sm leading-relaxed mb-6">{card.desc}</p>
+                <div className="flex items-center text-xs font-black uppercase tracking-widest text-amber-800 group-hover:gap-2 transition-all">
+                  Manage Now <ChevronRight size={14} />
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );

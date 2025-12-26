@@ -18,6 +18,21 @@ export const submitStory = async (req, res) => {
   }
 };
 
+export const storyDetail = async (req, res) => {
+  try {
+    const story = await Story.findById(req.params.id).populate(
+      "userId",
+      "name email"
+    );
+    if (!story || story.status !== "APPROVED") {
+      return res.status(404).json({ message: "Story not found" });
+    }
+    res.json(story);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 export const getApprovedStories = async (req, res) => {
   try {
     const stories = await Story.find({ status: "APPROVED" })
@@ -31,6 +46,7 @@ export const getApprovedStories = async (req, res) => {
 };
 
 export const getPendingStories = async (req, res) => {
+  console.log("pending stories");
   try {
     const stories = await Story.find({ status: "PENDING" })
       .populate("userId", "name email")

@@ -1,179 +1,162 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosClient from "../api/axiosClient";
+import { Upload, X, Save, Image as ImageIcon } from "lucide-react";
 
 const AdminHeritageForm = () => {
-  const { id } = useParams(); // undefined for new
+  const { id } = useParams();
   const navigate = useNavigate();
-
+  const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     title: "",
     state: "",
     category: "monument",
     description: "",
-    images: [], // urls
+    images: [],
     audioUrl: "",
-    timelineEventId: null,
   });
-  const [imageFile, setImageFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (id) {
-      axiosClient
-        .get(`/heritage/${id}`)
-        .then((res) => setForm(res.data))
-        .catch((err) => console.error(err));
+      axiosClient.get(`/heritage/${id}`).then((res) => setForm(res.data));
     }
   }, [id]);
 
-  const uploadFile = async (file) => {
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
     setUploading(true);
     const fd = new FormData();
     fd.append("file", file);
-    const res = await axiosClient.post("/upload", fd, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-    setUploading(false);
-    return res.data.url;
-  };
-
-  const handleAddImage = async () => {
-    if (!imageFile) return alert("Select image first");
     try {
-      const url = await uploadFile(imageFile);
-      setForm((prev) => ({ ...prev, images: [...(prev.images || []), url] }));
-      setImageFile(null);
-    } catch (err) {
-      console.error(err);
+      const res = await axiosClient.post("/upload", fd, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setForm((prev) => ({ ...prev, images: [...prev.images, res.data.url] }));
+    } catch {
       alert("Upload failed");
+    } finally {
+      setUploading(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
     try {
-      if (id) {
-        await axiosClient.put(`/heritage/${id}`, form);
-        alert("Updated");
-      } else {
-        await axiosClient.post("/heritage", form);
-        console.log("success");
-        alert("Created");
-      }
+      id
+        ? await axiosClient.put(`/heritage/${id}`, form)
+        : await axiosClient.post("/heritage", form);
       navigate("/admin/heritage");
     } catch (err) {
-      console.error(err);
-      alert("Save failed: " + (err?.response?.data?.message || err.message));
+      alert("Save failed");
     }
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 mt-20">
-      <h1 className="text-2xl font-bold mb-4">
-        {id ? "Edit" : "Add"} Heritage
+    <div className="max-w-4xl mx-auto p-6 mt-24 mb-20">
+      <h1 className="text-3xl font-serif font-bold mb-8">
+        {id ? "Refine" : "Create"} Heritage Entry
       </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          className="w-full p-2 border rounded"
-          placeholder="Title"
-          value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
-          required
-        />
-        <input
-          className="w-full p-2 border rounded"
-          placeholder="State"
-          value={form.state}
-          onChange={(e) => setForm({ ...form, state: e.target.value })}
-          required
-        />
-        <select
-          className="w-full p-2 border rounded"
-          value={form.category}
-          onChange={(e) => setForm({ ...form, category: e.target.value })}
-        >
-          <option value="monument">Monument</option>
-          <option value="festival">Festival</option>
-          <option value="art">Art</option>
-          <option value="food">Food</option>
-        </select>
-        <textarea
-          className="w-full p-2 border rounded"
-          placeholder="Description"
-          value={form.description}
-          onChange={(e) => setForm({ ...form, description: e.target.value })}
-          rows={6}
-        ></textarea>
-
-        <div>
-          <label className="block mb-1">Add image</label>
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 gap-8"
+      >
+        <div className="space-y-4">
           <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImageFile(e.target.files[0])}
-            className=" bg-gray-400 rounded-2xl p-2 w-sm"
+            className="w-full p-4 bg-white border border-stone-200 rounded-2xl focus:ring-2 focus:ring-amber-500 outline-none"
+            placeholder="Site Title"
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+            required
           />
-          <button
-            type="button"
-            onClick={handleAddImage}
-            className="ml-2 px-3 py-1 bg-blue-600 text-white rounded"
-            disabled={uploading}
+
+          <input
+            className="w-full p-4 bg-white border border-stone-200 rounded-2xl focus:ring-2 focus:ring-amber-500 outline-none"
+            placeholder="State / Region"
+            value={form.state}
+            onChange={(e) => setForm({ ...form, state: e.target.value })}
+            required
+          />
+
+          <select
+            className="w-full p-4 bg-white border border-stone-200 rounded-2xl outline-none"
+            value={form.category}
+            onChange={(e) => setForm({ ...form, category: e.target.value })}
           >
-            {uploading ? "Uploading..." : "Upload & Add"}
-          </button>
+            <option value="monument">Monument</option>
+            <option value="festival">Festival</option>
+            <option value="art">Art</option>
+            <option value="food">Food</option>
+          </select>
+
+          <textarea
+            className="w-full p-4 bg-white border border-stone-200 rounded-2xl h-48 outline-none"
+            placeholder="Full historical description..."
+            value={form.description}
+            onChange={(e) => setForm({ ...form, description: e.target.value })}
+          ></textarea>
         </div>
 
-        <div>
-          <p className="text-sm text-gray-600">Current images:</p>
-          <div className="flex gap-2 mt-2">
-            {(form.images || []).map((u, idx) => (
-              <div key={idx} className="relative">
+        <div className="space-y-6">
+          <div className="bg-stone-100 p-8 rounded-[2rem] border-2 border-dashed border-stone-200 text-center relative">
+            <input
+              type="file"
+              className="absolute inset-0 opacity-0 cursor-pointer"
+              onChange={handleFileUpload}
+              disabled={uploading}
+            />
+            <Upload className="mx-auto text-stone-400 mb-2" />
+            <p className="text-sm font-bold text-stone-500">
+              {uploading ? "Uploading..." : "Click to upload gallery image"}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2">
+            {form.images.map((img, i) => (
+              <div key={i} className="relative group h-20">
                 <img
-                  src={u}
-                  className="w-24 h-16 object-cover rounded"
-                  alt=""
+                  src={img}
+                  className="w-full h-full object-cover rounded-xl"
                 />
                 <button
                   type="button"
                   onClick={() =>
-                    setForm((prev) => ({
-                      ...prev,
-                      images: prev.images.filter((x, i) => i !== idx),
+                    setForm((p) => ({
+                      ...p,
+                      images: p.images.filter((_, idx) => idx !== i),
                     }))
                   }
-                  className="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-6 h-6 text-xs"
+                  className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  x
+                  <X size={12} />
                 </button>
               </div>
             ))}
           </div>
-        </div>
 
-        <input
-          className="w-full p-2 border rounded"
-          placeholder="Audio URL (optional)"
-          value={form.audioUrl}
-          onChange={(e) => setForm({ ...form, audioUrl: e.target.value })}
-        />
+          <input
+            className="w-full p-4 bg-white border border-stone-200 rounded-2xl outline-none"
+            placeholder="Audio Recording URL"
+            value={form.audioUrl}
+            onChange={(e) => setForm({ ...form, audioUrl: e.target.value })}
+          />
 
-        <div className="flex gap-3">
-          <button
-            className="px-4 py-2 bg-green-600 text-white rounded"
-            type="submit"
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            className="px-4 py-2 border rounded"
-            onClick={() => navigate(-1)}
-          >
-            Cancel
-          </button>
+          <div className="flex gap-4 pt-6">
+            <button
+              type="submit"
+              className="flex-1 bg-stone-900 text-white p-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-amber-800 transition-all shadow-xl"
+            >
+              <Save size={20} /> Commit Changes
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="px-8 py-4 border border-stone-200 rounded-2xl font-bold"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </form>
     </div>
