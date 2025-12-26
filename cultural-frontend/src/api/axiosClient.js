@@ -4,7 +4,7 @@ import axios from "axios";
 
 const axiosClient = axios.create({
   // Use localhost for dev, and the Render URL for production
-  baseURL: "https://cultural-backend.onrender.com/api",
+  baseURL: "https://cultural-website.onrender.com/api",
   withCredentials: true,
 });
 
