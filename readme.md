@@ -97,9 +97,9 @@ Once both frontend and backend are running:
 | Layer    | Technology                              |
 | -------- | --------------------------------------- |
 | Frontend | React / JavaScript                      |
-| Backend  | Node.js / Express (or your chosen tech) |
-| Database | (your database here)                    |
-| Styling  | CSS / Tailwind / Bootstrap              |
+| Backend  | Node.js / Express                       |
+| Database | mysql                                   |
+| Styling  | CSS / Tailwind                          |
 
 > Update this section to match your actual stack.
 
@@ -114,11 +114,6 @@ Once both frontend and backend are running:
 5. Open a Pull Request
 
 ---
-
-## 📄 License
-
-This project is open source and available under the **MIT License**.
-(Replace with your chosen license if different.)
 
 ---
 
