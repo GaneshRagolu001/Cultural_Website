@@ -152,17 +152,16 @@ npm run dev
 
 ---
 
-## 📡 API Endpoints Overview
+## 🛡️ Tech Stack
 
-The backend provides several RESTful API endpoints logically grouped into routes. All routes are prefixed with `/api`.
+| Layer    | Technology                              |
+| -------- | --------------------------------------- |
+| Frontend | React / JavaScript                      |
+| Backend  | Node.js / Express (or your chosen tech) |
+| Database | (your database here)                    |
+| Styling  | CSS / Tailwind / Bootstrap              |
 
-- **Auth Routes (`/auth`)**: Account registration, login, logout.
-- **Heritage Routes (`/heritage`)**: CRUD operations for heritage sites and monuments.
-- **Story Routes (`/stories`)**: Manage user-submitted stories, including approvals.
-- **Timeline Routes (`/timeline`)**: Provide access to chronological historical events.
-- **Admin Routes (`/admin`)**: Analytics, access controls, and dashboard metrics.
-- **Upload Routes (`/upload`)**: Integration points for Cloudinary upload middleware.
-- **QR Code Routes (`/qrcode`)**: Endpoint for generating site-specific QR codes.
+> Update this section to match your actual stack.
 
 ---
 
@@ -180,10 +179,22 @@ Contributions are always welcome! Whether you are fixing a bug, adding a new fea
 
 ## 📄 License
 
-This project is open-source and expected to be available under the terms of the MIT License. (Check the root level for `LICENSE` files).
+This project is open source and available under the **MIT License**.
+(Replace with your chosen license if different.)
 
 ---
 
-<div align="center">
-  <b>Built with ❤️ by <a href="https://github.com/GaneshRagolu001">GaneshRagolu001</a> and contributors.</b>
-</div>
+## 📬 Contact
+
+If you have questions, you can reach out:
+
+**GitHub:** [https://github.com/GaneshRagolu001/Cultural_Website](https://github.com/GaneshRagolu001/Cultural_Website)
+
+---
+
+```
+
+::contentReference[oaicite:2]{index=2}
+```
+
+[1]: https://github.com/GaneshRagolu001/Cultural_Website/tree/main "GitHub - GaneshRagolu001/Cultural_Website: An interactive cultural website designed to document and present heritage, traditions, festivals, and historical narratives, promoting awareness and appreciation of cultural diversity."
